@@ -1,1 +1,6 @@
 desktop.ini
+.idea
+*.pyc
+__pycache__
+*.json
+*sql*
