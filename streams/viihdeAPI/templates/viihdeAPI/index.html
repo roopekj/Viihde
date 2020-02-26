@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+      	<head>
+		<style>
+			#viihdePlayer {
+			        display: block;
+			        margin-left: auto;
+			        margin-right: auto;
+			        width: 95vw;
+		        	height: 95vh;
+			}
+		</style>
+	</head>
+        <body>
+              	<input id="streamName">Name of stream</input>
+                <button onclick="loadStream()">OK</button>
+                <video id="viihdePlayer" controls="true" poster="{{DEPENDENCY_URL}}/Elisa.svg"></video>
+                <script src="{{DEPENDENCY_URL}}/hasplayer.js"></script>
+		<script>
+			function loadStream() {
+			        var input = document.getElementById('streamName').value
+				const request = new Request('{{API_URL}}/streams/?q=' + input, { method: 'GET',  redirect: 'follow', mode: 'cors', referrerPolicy: 'no-referrer' })
+			        fetch(request).then((response) => {
+			                response.text().then((streamURL) => {
+			                        var stream = {
+			                                url: streamURL
+			                        };
+			                        var mediaPlayer = new MediaPlayer();
+			                        mediaPlayer.init(document.querySelector("#viihdePlayer"));
+			                        mediaPlayer.load(stream);
+			                });
+			        }).catch((e) => {
+			                alert(e);
+			        });
+			}
+	        </script>		
+        </body>
+</html>
